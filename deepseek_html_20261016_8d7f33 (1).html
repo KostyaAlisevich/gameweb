@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameWebStudio — Разработка и услуги</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e17;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(0, 150, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 100, 255, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; animation: fadeIn 1s ease-in; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== ШАПКА ===== */
+        .header { text-align: center; margin-bottom: 50px; position: relative; }
+
+        .admin-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(20, 30, 50, 0.7);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            color: #4db8ff;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: rgba(0, 150, 255, 0.2);
+            border-color: #00b4ff;
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.5);
+        }
+
+        .logo-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.6), 0 0 60px rgba(0, 100, 255, 0.3);
+            animation: pulse 3s infinite ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 150, 255, 0.6), 0 0 60px rgba(0, 100, 255, 0.3); }
+            50% { box-shadow: 0 0 45px rgba(0, 180, 255, 0.9), 0 0 90px rgba(0, 130, 255, 0.5); }
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffffff 0%, #4db8ff 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: #8fa8c8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 35px;
+        }
+
+        /* ===== ССЫЛКИ ===== */
+        .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 60px;
+        }
+
+        .link-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 22px 15px;
+            background: rgba(20, 30, 50, 0.7);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 14px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .link-card:hover {
+            border-color: #00b4ff;
+            box-shadow: 0 0 25px rgba(0, 150, 255, 0.5);
+            transform: translateY(-5px);
+            background: rgba(25, 40, 65, 0.9);
+        }
+
+        .link-icon { font-size: 2rem; margin-bottom: 10px; }
+        .link-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
+        .link-desc { font-size: 0.8rem; color: #8fa8c8; }
+
+        /* ===== СЕКЦИИ ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title span { color: #4db8ff; }
+
+        /* ===== ТОВАРЫ ===== */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background: rgba(20, 30, 50, 0.7);
+            border: 1px solid rgba(0, 150, 255, 0.25);
+            border-radius: 16px;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            border-color: #00b4ff;
+            box-shadow: 0 0 25px rgba(0, 150, 255, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .product-card.selected {
+            border-color: #00b4ff;
+            background: rgba(0, 120, 220, 0.2);
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.6);
+        }
+
+        .product-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            color: #00d4ff;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .product-icon { font-size: 2.2rem; margin-bottom: 12px; }
+        .product-name { font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
+        .product-price { font-size: 1.3rem; color: #4db8ff; font-weight: 700; }
+        .product-desc { font-size: 0.85rem; color: #8fa8c8; margin-top: 8px; line-height: 1.4; }
+
+        .custom-input-wrap { display: none; margin-top: 15px; }
+        .custom-input-wrap.active { display: block; }
+
+        .custom-input-wrap label {
+            display: block;
+            font-size: 0.85rem;
+            color: #8fa8c8;
+            margin-bottom: 6px;
+        }
+
+        .custom-input-wrap textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(10, 15, 25, 0.9);
+            border: 1px solid rgba(0, 150, 255, 0.4);
+            border-radius: 10px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 70px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .custom-input-wrap textarea:focus {
+            border-color: #00b4ff;
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.3);
+        }
+
+        /* ===== КНОПКИ ===== */
+        .btn {
+            display: block;
+            margin: 0 auto;
+            padding: 15px 45px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(90deg, #0078dc, #00b4ff);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(0, 150, 255, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 180, 255, 0.7);
+        }
+
+        .btn:active { transform: translateY(0); }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ===== МОДАЛЬНЫЕ ОКНА ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: linear-gradient(145deg, #0f1624 0%, #0a1020 100%);
+            border: 1px solid rgba(0, 150, 255, 0.4);
+            border-radius: 18px;
+            padding: 30px 25px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 0 60px rgba(0, 150, 255, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            animation: modalIn 0.3s ease;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal::-webkit-scrollbar { width: 6px; }
+        .modal::-webkit-scrollbar-track { background: transparent; }
+        .modal::-webkit-scrollbar-thumb {
+            background: rgba(0, 150, 255, 0.4);
+            border-radius: 3px;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #4db8ff;
+            text-shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 150, 255, 0.15);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            color: #4db8ff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 180, 255, 0.3);
+            border-color: #00b4ff;
+            transform: rotate(90deg);
+        }
+
+        /* ===== СВОДКА ЗАКАЗА ===== */
+        .order-summary {
+            background: rgba(0, 120, 220, 0.12);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .order-summary .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            gap: 10px;
+        }
+
+        .order-summary .row:last-child { margin-bottom: 0; }
+        .order-summary .label { color: #8fa8c8; flex-shrink: 0; }
+        .order-summary .value { color: #ffffff; font-weight: 600; text-align: right; word-break: break-word; }
+        .order-summary .value.price { color: #4db8ff; font-size: 1.1rem; }
+
+        .custom-note {
+            background: rgba(255, 180, 0, 0.1);
+            border-left: 3px solid #ffb400;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #ffd166;
+            margin-bottom: 20px;
+            word-break: break-word;
+        }
+
+        /* ===== ФОРМЫ ===== */
+        .form-group { margin-bottom: 16px; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #8fa8c8;
+            margin-bottom: 6px;
+        }
+
+        .form-group label .required { color: #ff5577; }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(10, 15, 25, 0.9);
+            border: 1px solid rgba(0, 150, 255, 0.4);
+            border-radius: 10px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #00b4ff;
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.3);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 80px; }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: #6a8099;
+            margin-top: 5px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .modal-buttons .btn {
+            flex: 1;
+            margin: 0;
+            padding: 13px 20px;
+            font-size: 0.95rem;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid rgba(0, 150, 255, 0.4);
+            color: #8fa8c8;
+            box-shadow: none;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(0, 150, 255, 0.1);
+            color: #ffffff;
+            box-shadow: none;
+        }
+
+        /* ===== АДМИН-ПАНЕЛЬ ===== */
+        .admin-orders {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 5px;
+        }
+
+        .admin-orders::-webkit-scrollbar { width: 6px; }
+        .admin-orders::-webkit-scrollbar-track { background: transparent; }
+        .admin-orders::-webkit-scrollbar-thumb {
+            background: rgba(0, 150, 255, 0.4);
+            border-radius: 3px;
+        }
+
+        .order-item {
+            background: rgba(0, 120, 220, 0.1);
+            border: 1px solid rgba(0, 150, 255, 0.25);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .order-item:hover {
+            border-color: rgba(0, 180, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.2);
+        }
+
+        .order-item .order-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 150, 255, 0.15);
+            gap: 10px;
+        }
+
+        .order-item .order-num {
+            font-size: 0.75rem;
+            color: #4db8ff;
+            font-weight: 700;
+            background: rgba(0, 150, 255, 0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .order-item .order-date {
+            font-size: 0.75rem;
+            color: #6a8099;
+        }
+
+        .order-item .order-line {
+            display: flex;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            gap: 8px;
+        }
+
+        .order-item .order-line .lbl {
+            color: #8fa8c8;
+            min-width: 90px;
+            flex-shrink: 0;
+        }
+
+        .order-item .order-line .val {
+            color: #ffffff;
+            word-break: break-word;
+            flex: 1;
+        }
+
+        .order-item .order-line .val a {
+            color: #4db8ff;
+            text-decoration: none;
+        }
+
+        .order-item .order-line .val a:hover { text-decoration: underline; }
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .admin-actions button {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.85rem;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid rgba(0, 150, 255, 0.4);
+            background: transparent;
+            color: #8fa8c8;
+            transition: all 0.3s;
+        }
+
+        .admin-actions button:hover {
+            background: rgba(0, 150, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .admin-actions .danger {
+            border-color: rgba(255, 80, 100, 0.4);
+            color: #ff5577;
+        }
+
+        .admin-actions .danger:hover {
+            background: rgba(255, 80, 100, 0.15);
+            border-color: #ff5577;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6a8099;
+            font-size: 0.95rem;
+        }
+
+        .empty-state .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background: rgba(0, 200, 100, 0.15);
+            color: #00d980;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        /* ===== ФУТЕР ===== */
+        footer {
+            color: #4a5f7a;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 30px 0 10px;
+        }
+
+        footer .accent { color: #4db8ff; font-weight: 600; }
+
+        /* ===== УВЕДОМЛЕНИЕ ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(145deg, #0f1624, #0a1020);
+            border: 1px solid rgba(0, 200, 100, 0.5);
+            color: #ffffff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 200, 100, 0.3);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            font-size: 0.95rem;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .logo-img { width: 140px; height: 140px; }
+            .subtitle { font-size: 0.85rem; }
+            .section-title { font-size: 1.4rem; }
+            .products { grid-template-columns: 1fr; }
+            .btn { width: 100%; }
+            .admin-btn { position: static; margin-bottom: 15px; }
+            .modal { padding: 25px 18px; }
+            .modal h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ШАПКА -->
+        <div class="header">
+            <button class="admin-btn" id="openAdminBtn">🔐 Админ-панель</button>
+            <img src="logo.png" alt="GameWebStudio" class="logo-img">
+            <h1>GameWebStudio</h1>
+            <p class="subtitle">Разработка • Дизайн • Поддержка</p>
+        </div>
+
+        <!-- ССЫЛКИ -->
+        <div class="links">
+            <a href="https://m.vk.ru/gameweb_studio" target="_blank" class="link-card">
+                <div class="link-icon">📢</div>
+                <div class="link-title">Наш канал</div>
+                <div class="link-desc">Новости студии</div>
+            </a>
+            <a href="https://vk.ru/teh_game_web_studio" target="_blank" class="link-card">
+                <div class="link-icon">🛠️</div>
+                <div class="link-title">Техподдержка</div>
+                <div class="link-desc">Помощь и вопросы</div>
+            </a>
+            <a href="https://m.vk.ru/topic-241557775_67604376" target="_blank" class="link-card">
+                <div class="link-icon">⭐</div>
+                <div class="link-title">Отзывы</div>
+                <div class="link-desc">Мнения клиентов</div>
+            </a>
+        </div>
+
+        <!-- ТОВАРЫ -->
+        <h2 class="section-title">Наши <span>услуги</span></h2>
+
+        <div class="products" id="products">
+            <div class="product-card" data-id="1" data-name="Форум под ключ" data-price="от 5000 ₽">
+                <div class="product-icon">🚀</div>
+                <div class="product-name">Форум под ключ</div>
+                <div class="product-price">от 5000 ₽</div>
+                <div class="product-desc">Полная разработка и запуск форума с нуля</div>
+            </div>
+
+            <div class="product-card" data-id="2" data-name="Настройка форума" data-price="от 2000 ₽">
+                <div class="product-icon">⚙️</div>
+                <div class="product-name">Настройка форума</div>
+                <div class="product-price">от 2000 ₽</div>
+                <div class="product-desc">Установка, настройка движка и модулей</div>
+            </div>
+
+            <div class="product-card" data-id="3" data-name="Оформление форума" data-price="от 1500 ₽">
+                <div class="product-icon">🎨</div>
+                <div class="product-name">Оформление форума</div>
+                <div class="product-price">от 1500 ₽</div>
+                <div class="product-desc">Дизайн, стили, логотип и графика</div>
+            </div>
+
+            <div class="product-card" data-id="4" data-name="Другое" data-price="по договорённости">
+                <div class="product-icon">💬</div>
+                <div class="product-name">Другое</div>
+                <div class="product-price">по договорённости</div>
+                <div class="product-desc">Опишите свою задачу — обсудим индивидуально</div>
+                <div class="custom-input-wrap" id="customInputWrap">
+                    <label>Опишите, что вам нужно:</label>
+                    <textarea id="customInput" placeholder="Например: хочу доработку форума, интеграцию с Discord..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" id="nextBtn" disabled>Далее →</button>
+
+        <footer>
+            © 2026 <span class="accent">GameWebStudio</span>. Все права защищены.
+        </footer>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО: ОФОРМЛЕНИЕ ЗАКАЗА ===== -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <button class="modal-close" id="closeOrderBtn">✕</button>
+            <h2>📝 Оформление заказа</h2>
+
+            <div class="order-summary">
+                <div class="row">
+                    <span class="label">Услуга:</span>
+                    <span class="value" id="modalService">—</span>
+                </div>
+                <div class="row">
+                    <span class="label">Цена:</span>
+                    <span class="value price" id="modalPrice">—</span>
+                </div>
+            </div>
+
+            <div class="custom-note" id="customNote" style="display:none;"></div>
+
+            <div class="form-group">
+                <label>Ваше имя <span class="required">*</span></label>
+                <input type="text" id="userName" placeholder="Как к вам обращаться?">
+            </div>
+
+            <div class="form-group">
+                <label>Ссылка на профиль ВК <span class="required">*</span></label>
+                <input type="text" id="userVk" placeholder="https://vk.com/ваш_профиль">
+                <div class="form-hint">Например: https://vk.com/ivanov</div>
+            </div>
+
+            <div class="form-group">
+                <label>Комментарий (необязательно)</label>
+                <textarea id="userComment" placeholder="Дополнительные пожелания..."></textarea>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" id="cancelOrderBtn">Отмена</button>
+                <button class="btn" id="submitOrderBtn">Оформить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО: ВХОД В АДМИНКУ ===== -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="modal-close" id="closeLoginBtn">✕</button>
+            <h2>🔐 Вход в админ-панель</h2>
+
+            <div class="form-group">
+                <label>Логин</label>
+                <input type="text" id="loginUser" placeholder="Введите логин">
+            </div>
+
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" id="loginPass" placeholder="Введите пароль">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" id="cancelLoginBtn">Отмена</button>
+                <button class="btn" id="submitLoginBtn">Войти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО: АДМИН-ПАНЕЛЬ ===== -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal" style="max-width: 600px;">
+            <button class="modal-close" id="closeAdminBtn">✕</button>
+            <h2>📥 Заявки</h2>
+            <div class="admin-badge">👑 Администратор</div>
+
+            <div class="admin-orders" id="adminOrders"></div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" id="clearOrdersBtn">🗑 Очистить всё</button>
+                <button class="btn" id="logoutBtn">Выйти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== УВЕДОМЛЕНИЕ ===== -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ===== НАСТРОЙКИ =====
+        // Логин и пароль администратора
+        const ADMIN_LOGIN = "admin";
+        const ADMIN_PASSWORD = "aka29072012";
+
+        // ===== ЭЛЕМЕНТЫ =====
+        const productCards = document.querySelectorAll('.product-card');
+        const nextBtn = document.getElementById('nextBtn');
+        const customInputWrap = document.getElementById('customInputWrap');
+        const customInput = document.getElementById('customInput');
+
+        const orderModal = document.getElementById('orderModal');
+        const modalService = document.getElementById('modalService');
+        const modalPrice = document.getElementById('modalPrice');
+        const customNote = document.getElementById('customNote');
+        const userName = document.getElementById('userName');
+        const userVk = document.getElementById('userVk');
+        const userComment = document.getElementById('userComment');
+        const closeOrderBtn = document.getElementById('closeOrderBtn');
+        const cancelOrderBtn = document.getElementById('cancelOrderBtn');
+        const submitOrderBtn = document.getElementById('submitOrderBtn');
+
+        const loginModal = document.getElementById('loginModal');
+        const loginUser = document.getElementById('loginUser');
+        const loginPass = document.getElementById('loginPass');
+        const closeLoginBtn = document.getElementById('closeLoginBtn');
+        const cancelLoginBtn = document.getElementById('cancelLoginBtn');
+        const submitLoginBtn = document.getElementById('submitLoginBtn');
+
+        const adminModal = document.getElementById('adminModal');
+        const adminOrders = document.getElementById('adminOrders');
+        const closeAdminBtn = document.getElementById('closeAdminBtn');
+        const clearOrdersBtn = document.getElementById('clearOrdersBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const openAdminBtn = document.getElementById('openAdminBtn');
+
+        const toast = document.getElementById('toast');
+
+        let selectedProduct = null;
+        let isAdminLoggedIn = sessionStorage.getItem('gws_admin') === 'true';
+
+        // ===== УВЕДОМЛЕНИЕ =====
+        function showToast(text, isError = false) {
+            toast.textContent = text;
+            toast.style.borderColor = isError ? 'rgba(255, 80, 100, 0.5)' : 'rgba(0, 200, 100, 0.5)';
+            toast.style.boxShadow = isError
+                ? '0 10px 40px rgba(255, 80, 100, 0.3)'
+                : '0 10px 40px rgba(0, 200, 100, 0.3)';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ===== ВЫБОР УСЛУГИ =====
+        productCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName === 'TEXTAREA') return;
+
+                productCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedProduct = {
+                    name: card.dataset.name,
+                    price: card.dataset.price,
+                    id: card.dataset.id
+                };
+
+                if (card.dataset.name === 'Другое') {
+                    customInputWrap.classList.add('active');
+                } else {
+                    customInputWrap.classList.remove('active');
+                    customInput.value = '';
+                }
+
+                nextBtn.disabled = false;
+            });
+        });
+
+        // ===== КНОПКА "ДАЛЕЕ" =====
+        nextBtn.addEventListener('click', () => {
+            if (!selectedProduct) return;
+
+            if (selectedProduct.name === 'Другое') {
+                const customText = customInput.value.trim();
+                if (!customText) {
+                    showToast('Опишите вашу задачу', true);
+                    customInput.focus();
+                    return;
+                }
+                selectedProduct.customText = customText;
+            }
+
+            modalService.textContent = selectedProduct.name;
+            modalPrice.textContent = selectedProduct.price;
+
+            if (selectedProduct.name === 'Другое' && selectedProduct.customText) {
+                customNote.style.display = 'block';
+                customNote.textContent = '📝 ' + selectedProduct.customText;
+            } else {
+                customNote.style.display = 'none';
+            }
+
+            userName.value = '';
+            userVk.value = '';
+            userComment.value = '';
+            orderModal.classList.add('active');
+            setTimeout(() => userName.focus(), 100);
+        });
+
+        // ===== ЗАКРЫТИЕ МОДАЛЬНЫХ ОКОН =====
+        function closeModal(el) { el.classList.remove('active'); }
+
+        closeOrderBtn.addEventListener('click', () => closeModal(orderModal));
+        cancelOrderBtn.addEventListener('click', () => closeModal(orderModal));
+        orderModal.addEventListener('click', (e) => {
+            if (e.target === orderModal) closeModal(orderModal);
+        });
+
+        closeLoginBtn.addEventListener('click', () => closeModal(loginModal));
+        cancelLoginBtn.addEventListener('click', () => closeModal(loginModal));
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) closeModal(loginModal);
+        });
+
+        closeAdminBtn.addEventListener('click', () => closeModal(adminModal));
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) closeModal(adminModal);
+        });
+
+        // ===== ОФОРМЛЕНИЕ ЗАКАЗА =====
+        submitOrderBtn.addEventListener('click', () => {
+            const name = userName.value.trim();
+            const vk = userVk.value.trim();
+            const comment = userComment.value.trim();
+
+            if (!name) {
+                showToast('Напишите ваше имя', true);
+                userName.focus();
+                return;
+            }
+            if (!vk) {
+                showToast('Укажите ссылку на профиль ВК', true);
+                userVk.focus();
+                return;
+            }
+
+            // Сохраняем заявку
+            const order = {
+                id: Date.now(),
+                name: name,
+                vk: vk,
+                service: selectedProduct.name,
+                price: selectedProduct.price,
+                customText: selectedProduct.customText || '',
+                comment: comment,
+                date: new Date().toLocaleString('ru-RU')
+            };
+
+            const orders = JSON.parse(localStorage.getItem('gws_orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('gws_orders', JSON.stringify(orders));
+
+            // Закрываем модальное окно
+            closeModal(orderModal);
+
+            // Показываем уведомление об успехе
+            showToast('✅ Заявка успешно оформлена!');
+
+            // Сброс формы
+            selectedProduct = null;
+            productCards.forEach(c => c.classList.remove('selected'));
+            nextBtn.disabled = true;
+            customInput.value = '';
+            customInputWrap.classList.remove('active');
+
+            // Плавный скролл наверх — на главную
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== АДМИН: ВХОД =====
+        openAdminBtn.addEventListener('click', () => {
+            if (isAdminLoggedIn) {
+                renderOrders();
+                adminModal.classList.add('active');
+            } else {
+                loginUser.value = '';
+                loginPass.value = '';
+                loginModal.classList.add('active');
+                setTimeout(() => loginUser.focus(), 100);
+            }
+        });
+
+        submitLoginBtn.addEventListener('click', () => {
+            const u = loginUser.value.trim();
+            const p = loginPass.value;
+
+            if (u === ADMIN_LOGIN && p === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem('gws_admin', 'true');
+                closeModal(loginModal);
+                renderOrders();
+                adminModal.classList.add('active');
+                showToast('✅ Добро пожаловать, администратор!');
+            } else {
+                showToast('❌ Неверный логин или пароль', true);
+                loginPass.value = '';
+                loginPass.focus();
+            }
+        });
+
+        loginPass.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') submitLoginBtn.click();
+        });
+
+        // ===== АДМИН: ВЫХОД =====
+        logoutBtn.addEventListener('click', () => {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem('gws_admin');
+            closeModal(adminModal);
+            showToast('Вы вышли из админ-панели');
+        });
+
+        // ===== АДМИН: РЕНДЕР ЗАЯВОК =====
+        function renderOrders() {
+            const orders = JSON.parse(localStorage.getItem('gws_orders') || '[]');
+
+            if (orders.length === 0) {
+                adminOrders.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        Пока нет заявок
+                    </div>`;
+                return;
+            }
+
+            adminOrders.innerHTML = orders.slice().reverse().map((o, i) => `
+                <div class="order-item">
+                    <div class="order-head">
+                        <span class="order-num">#${orders.length - i}</span>
+                        <span class="order-date">${o.date}</span>
+                    </div>
+                    <div class="order-line">
+                        <span class="lbl">👤 Имя:</span>
+                        <span class="val">${escapeHtml(o.name)}</span>
+                    </div>
+                    <div class="order-line">
+                        <span class="lbl">🔗 ВК:</span>
+                        <span class="val"><a href="${escapeHtml(o.vk)}" target="_blank">${escapeHtml(o.vk)}</a></span>
+                    </div>
+                    <div class="order-line">
+                        <span class="lbl">📦 Услуга:</span>
+                        <span class="val">${escapeHtml(o.service)}</span>
+                    </div>
+                    <div class="order-line">
+                        <span class="lbl">💰 Цена:</span>
+                        <span class="val" style="color:#4db8ff;font-weight:600;">${escapeHtml(o.price)}</span>
+                    </div>
+                    ${o.customText ? `
+                    <div class="order-line">
+                        <span class="lbl">📝 Описание:</span>
+                        <span class="val">${escapeHtml(o.customText)}</span>
+                    </div>` : ''}
+                    ${o.comment ? `
+                    <div class="order-line">
+                        <span class="lbl">💬 Коммент:</span>
+                        <span class="val">${escapeHtml(o.comment)}</span>
+                    </div>` : ''}
+                    <div class="admin-actions">
+                        <button class="danger" onclick="deleteOrder(${o.id})">🗑 Удалить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = String(text);
+            return div.innerHTML;
+        }
+
+        // ===== УДАЛЕНИЕ ЗАЯВКИ =====
+        window.deleteOrder = function(id) {
+            let orders = JSON.parse(localStorage.getItem('gws_orders') || '[]');
+            orders = orders.filter(o => o.id !== id);
+            localStorage.setItem('gws_orders', JSON.stringify(orders));
+            renderOrders();
+            showToast('Заявка удалена');
+        };
+
+        // ===== ОЧИСТИТЬ ВСЁ =====
+        clearOrdersBtn.addEventListener('click', () => {
+            if (confirm('Удалить все заявки? Это действие нельзя отменить.')) {
+                localStorage.removeItem('gws_orders');
+                renderOrders();
+                showToast('Все заявки удалены');
+            }
+        });
+
+        // ===== ЗАКРЫТИЕ ПО ESC =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                [orderModal, loginModal, adminModal].forEach(m => m.classList.remove('active'));
+            }
+        });
+    </script>
+</body>
+</html>
