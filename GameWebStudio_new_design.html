@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GameWebStudio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#060d1b;color:white;min-height:100vh;background:radial-gradient(circle at top,#123b70,#060d1b 45%)}
+.container{max-width:1100px;margin:auto;padding:20px}
+header{text-align:center;padding:25px 0}
+.logo{width:140px;height:140px;border-radius:50%;object-fit:cover;box-shadow:0 0 40px #00aaff}
+h1{font-size:42px;margin:20px 0;background:linear-gradient(90deg,#fff,#35aaff);color:transparent;background-clip:text}
+.subtitle{color:#9bb2d0}
+.nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px}
+button,.btn{border:0;border-radius:14px;padding:15px 25px;background:linear-gradient(90deg,#007cff,#00c8ff);color:#fff;font-weight:bold;cursor:pointer}
+.card{background:rgba(255,255,255,.07);border:1px solid rgba(0,170,255,.35);border-radius:22px;padding:25px;margin:20px 0;backdrop-filter:blur(10px)}
+.hero{text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.service{transition:.3s}
+.service:hover{transform:translateY(-8px);box-shadow:0 0 30px #008cff}
+.title{text-align:center;font-size:34px;margin:45px 0}
+.blue{color:#38adff}
+.promo-box{display:flex;gap:12px}
+.promo-box input{flex:1;padding:15px;border-radius:14px;border:1px solid #167bd0;background:#071426;color:white;font-size:18px}
+#promoResult{margin-top:15px;text-align:center}
+footer{text-align:center;color:#7890aa;padding:30px}
+@media(max-width:600px){h1{font-size:30px}.promo-box{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<img src="logo.png" class="logo">
+<h1>GameWebStudio</h1>
+<p class="subtitle">Разработка • Дизайн • Поддержка</p>
+<div class="nav"><button>👤 Войти</button><button>🔐 Админ</button></div>
+</header>
+
+<section class="card hero">
+<h2>Создаем <span class="blue">будущее</span> вашего проекта</h2>
+<p style="margin:20px;color:#b5c7df">Профессиональная разработка игровых проектов, форумов и цифровых решений.</p>
+<button>Заказать услугу</button>
+</section>
+
+<h2 class="title">Наши <span class="blue">услуги</span></h2>
+<div class="grid">
+<div class="card service">🎨<h3>Дизайн</h3><p>Уникальное оформление проекта</p></div>
+<div class="card service">🌐<h3>Форумы</h3><p>Создание игровых форумов</p></div>
+<div class="card service">⚙️<h3>Разработка</h3><p>Сайты и системы</p></div>
+</div>
+
+<h2 class="title">Проверить <span class="blue">промокод</span></h2>
+<div class="card">
+<div class="promo-box">
+<input id="promo" placeholder="Введите промокод">
+<button onclick="checkPromo()">Проверить</button>
+</div>
+<div id="promoResult"></div>
+</div>
+
+<footer>© 2026 <span class="blue">GameWebStudio</span>. Все права защищены.</footer>
+</div>
+
+<script>
+function checkPromo(){
+let v=document.getElementById('promo').value.trim();
+let r=document.getElementById('promoResult');
+if(!v){r.innerHTML='Введите промокод';r.style.color='#ff6677';return}
+r.innerHTML='Проверка промокода...';
+setTimeout(()=>{r.innerHTML='✅ Промокод проверен';r.style.color='#00dd88'},500)
+}
+</script>
+</body>
+</html>
